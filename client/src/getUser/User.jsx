@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 function User() {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,65 +19,69 @@ function User() {
     fetchData();
   }, []);
 
-  const deleteUser = async (userId)=>{
-    await axios.delete(`http://localhost:8000/api/delete/user/${userId}`)
-    .then((response)=>{
-      setUsers((prevUser)=>prevUser.filter((user)=>user._id !== userId));
-      toast.success(response.data.message, {position:"top-right"})
-    })
-    .catch((error)=>{
-      console.log(error);
-      
-    })
-  }
+  const deleteUser = async (userId) => {
+    await axios
+      .delete(`http://localhost:8000/api/delete/user/${userId}`)
+      .then((response) => {
+        setUsers((prev) => prev.filter((u) => u._id !== userId));
+        toast.success(response.data.message, { position: "top-right" });
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
-    <>
-      <div className="userTable">
-        <Link type="button" className="btn btn-primary" to={'/add'}>
-          Add User <i className="fa-solid fa-user-plus"></i>
-        </Link>
+    <div className="userPage">
+      <div className="userCard">
+        <div className="userHeader">
+          <h2>Users</h2>
+          <Link to="/add" className="addBtn">
+            + Add User
+          </Link>
+        </div>
 
-        {users.length === 0 ? 
+        {users.length === 0 ? (
           <div className="noData">
-            <h3>Data field is empty</h3>
-            <p>Please add new user</p>
+            <h3>No users found</h3>
+            <p>Please add a new user</p>
           </div>
-        :(<table className="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">S.no</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Address</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => {
-              return (
+        ) : (
+          <div className="tableWrapper">
+            <table>
+              <thead>
                 <tr>
-                  <td>{index + 1}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.address}</td>
-                  <td>
-                    <Link to={`/update/${user._id}`} type="button" className="btn btn-success">
-                      <i className="fa-solid fa-pen-to-square"></i>
-                    </Link>{" "}
-                    <button type="button" className="btn btn-danger" 
-                    onClick={()=>{deleteUser(user._id)}}>
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Action</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>)}
-
-        
+              </thead>
+              <tbody>
+                {users.map((user, index) => (
+                  <tr key={user._id}>
+                    <td>{index + 1}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.address}</td>
+                    <td className="actions">
+                      <Link to={`/update/${user._id}`} className="editBtn">
+                        ✏️
+                      </Link>
+                      <button
+                        className="deleteBtn"
+                        onClick={() => deleteUser(user._id)}
+                      >
+                        🗑️
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

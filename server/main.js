@@ -1,11 +1,10 @@
-// imports 
+// imports
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import route from "./routes/useRoute.js";
 import cors from "cors";
-
 
 dotenv.config();
 const app = express();
@@ -30,4 +29,4 @@ app.listen(PORT, () => {
   console.log(`Sever started at http://localhost:${PORT}`);
 });
 
-app.use("/api",route);
+app.use("/api", route);

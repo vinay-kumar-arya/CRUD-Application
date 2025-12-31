@@ -1,100 +1,95 @@
-import React, { use, useEffect, useState } from "react";
-import { Link, useNavigate , useParams} from "react-router-dom";
-import "./updateUser.css"
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import "./updateUser.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 function UpdateUser() {
-  const users = {
+  const [user, setUser] = useState({
     name: "",
     email: "",
     address: "",
-  };
-  const [user, setUser] = useState(users);
+  });
+
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-
     setUser({ ...user, [name]: value });
   };
 
-  useEffect(()=>{
-    axios.get(`http://localhost:8000/api/user/${id}`)
-    .then((response)=>{
-      setUser(response.data);
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-  },[id])
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/user/${id}`)
+      .then((res) => setUser(res.data))
+      .catch((err) => console.log(err));
+  }, [id]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .put(`http://localhost:8000/api/update/user/${id}`, user)
-      .then((response) => {
-        // console.log("User registration successful.");
-        toast.success(response.data.message, { position: "top-right" });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const res = await axios.put(
+        `http://localhost:8000/api/update/user/${id}`,
+        user
+      );
+      toast.success(res.data.message, { position: "top-right" });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
   };
+
   return (
-    <>
-      <div className="updateUser">
-        <Link to={"/"} type="button" className="btn btn-secondary">
-          <i className="fa-solid fa-backward"></i> Back
+    <div className="updateUserPage">
+      <div className="updateUserCard">
+        <Link to="/" className="backBtn">
+          ← Back
         </Link>
-        <h3>Update User</h3>
-        <form className="addUserForm" onSubmit={onFormSubmit}>
+
+        <h2>Update User</h2>
+
+        <form onSubmit={onFormSubmit}>
           <div className="inputGroup">
-            <label htmlFor="name">Name:</label>
+            <label>Name</label>
             <input
               type="text"
-              id="name"
               name="name"
-              autoComplete="off"
               placeholder="Enter your name"
-              onChange={inputHandler}
               value={user.name}
+              onChange={inputHandler}
             />
           </div>
+
           <div className="inputGroup">
-            <label htmlFor="email">E-mail:</label>
+            <label>Email</label>
             <input
               type="email"
-              id="email"
               name="email"
-              autoComplete="off"
               placeholder="Enter your email"
-              onChange={inputHandler}
               value={user.email}
+              onChange={inputHandler}
             />
           </div>
+
           <div className="inputGroup">
-            <label htmlFor="address">Address:</label>
+            <label>Address</label>
             <input
               type="text"
-              id="address"
               name="address"
-              autoComplete="off"
               placeholder="Enter your address"
-              onChange={inputHandler}
               value={user.address}
+              onChange={inputHandler}
             />
           </div>
-          <div className="inputGroup">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
+
+          <button type="submit" className="submitBtn">
+            Update User
+          </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

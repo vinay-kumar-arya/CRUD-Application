@@ -1,33 +1,100 @@
-.addUser{
-    background-color: white;
-    width: 25%;
-    margin: 50px auto;
-    padding: 40px;  
-    border-radius:10px;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
-}
-.addUser .inputGroup{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+.addUserPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-.addUser .inputGroup label {
-    margin-top: 5px;
-}
-.addUser .inputGroup input{
-    margin-bottom: 5px;
-    padding: 10px; 
-}
-.addUser h3{
-    margin-top: 30px;
-    text-align: center;
-    font-weight: bold;
-    color: darkcyan;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+.addUserCard {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 35px 30px 40px;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.6s ease;
 }
 
-.addUser .inputGroup button{
-    margin-top: 10px;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.backBtn {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #667eea;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.backBtn:hover {
+  color: #4c51bf;
+}
+
+.addUserCard h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: 600;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.inputGroup label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.inputGroup input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  outline: none;
+  font-size: 15px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #ff512f, #f09819);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 81, 47, 0.4);
+}
+
+@media (max-width: 480px) {
+  .addUserCard {
+    padding: 30px 22px;
+  }
 }
