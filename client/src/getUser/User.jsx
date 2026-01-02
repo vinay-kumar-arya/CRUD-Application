@@ -10,7 +10,9 @@ function User() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const getData = await axios.get("http://localhost:8000/api/users");
+        const getData = await axios.get(
+          "https://crud-application-7vj1.onrender.com/api/users"
+        );
         setUsers(getData.data);
       } catch (error) {
         console.log("Error while fetching data", error);
@@ -20,13 +22,15 @@ function User() {
   }, []);
 
   const deleteUser = async (userId) => {
-    await axios
-      .delete(`http://localhost:8000/api/delete/user/${userId}`)
-      .then((response) => {
-        setUsers((prev) => prev.filter((u) => u._id !== userId));
-        toast.success(response.data.message, { position: "top-right" });
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await axios.delete(
+        `https://crud-application-7vj1.onrender.com/api/delete/user/${userId}`
+      );
+      setUsers((prev) => prev.filter((u) => u._id !== userId));
+      toast.success(response.data.message, { position: "top-right" });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -56,14 +60,15 @@ function User() {
                   <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
                 {users.map((user, index) => (
                   <tr key={user._id}>
-                    <td>{index + 1}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.address}</td>
-                    <td className="actions">
+                    <td data-label="S.No">{index + 1}</td>
+                    <td data-label="Name">{user.name}</td>
+                    <td data-label="Email">{user.email}</td>
+                    <td data-label="Address">{user.address}</td>
+                    <td data-label="Action" className="actions">
                       <Link to={`/update/${user._id}`} className="editBtn">
                         ✏️
                       </Link>

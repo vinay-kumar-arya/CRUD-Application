@@ -57,6 +57,7 @@
 
 .tableWrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -91,21 +92,25 @@ tbody td {
   gap: 10px;
 }
 
-.editBtn {
+.editBtn,
+.deleteBtn {
+  min-width: 36px;
   padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.editBtn {
   background: #38a169;
   color: white;
-  border-radius: 8px;
   text-decoration: none;
-  font-size: 14px;
 }
 
 .deleteBtn {
-  padding: 8px 10px;
   background: #e53e3e;
   color: white;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -123,9 +128,70 @@ tbody td {
   color: #777;
 }
 
-@media (max-width: 768px) {
+/* 📱 MOBILE VIEW */
+@media (max-width: 600px) {
+  .userCard {
+    padding: 25px 15px;
+  }
+
   .userHeader {
     flex-direction: column;
     gap: 15px;
+  }
+
+  .addBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    background: #fff;
+    margin-bottom: 16px;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #555;
+  }
+
+  .actions {
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+}
+
+/* 📱 TABLET VIEW */
+@media (max-width: 900px) {
+  table th,
+  table td {
+    font-size: 13px;
+  }
+
+  .userCard {
+    max-width: 95%;
   }
 }

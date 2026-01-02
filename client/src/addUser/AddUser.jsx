@@ -21,7 +21,10 @@ function AddUser() {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/user", user);
+      const response = await axios.post(
+        "https://crud-application-7vj1.onrender.com/api/user",
+        user
+      );
       toast.success(response.data.message, { position: "top-right" });
       navigate("/");
     } catch (error) {

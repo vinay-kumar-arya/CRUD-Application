@@ -21,7 +21,7 @@ function UpdateUser() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/user/${id}`)
+      .get(`https://crud-application-7vj1.onrender.com/api/user/${id}`)
       .then((res) => setUser(res.data))
       .catch((err) => console.log(err));
   }, [id]);
@@ -30,7 +30,7 @@ function UpdateUser() {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/update/user/${id}`,
+        `https://crud-application-7vj1.onrender.com/api/update/user/${id}`,
         user
       );
       toast.success(res.data.message, { position: "top-right" });
